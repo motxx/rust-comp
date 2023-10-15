@@ -40,7 +40,23 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            k: i64,
+            a: [i64; n],
+            b: [i64; n],
+        }
+        let mut res: i64 = 0;
+        for i in 0..n {
+            res += (a[i] - b[i]).abs();
+        }
+        if k < res {
+            println!("No");
+            return;
+        }
+        if (k - res) % 2 == 0 {
+            println!("Yes");
+        } else {
+            println!("No");
         }
     }
 }
