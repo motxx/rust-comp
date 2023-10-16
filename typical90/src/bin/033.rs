@@ -40,8 +40,14 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            h: u64,
+            w: u64,
         }
+        if h == 1 || w == 1 {
+            println!("{}", max!(h, w));
+            return;
+        }
+        println!("{}", (w / 2 + w % 2) * (h / 2 + h % 2));
     }
 }
 

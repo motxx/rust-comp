@@ -8,6 +8,7 @@
 #![allow(dead_code)]
 use itertools::Itertools;
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
+use std::collections::HashSet;
 
 use proconio::{
     fastout, input,
@@ -40,7 +41,15 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            vs: [String; n],
+        }
+        let mut st: HashSet<String> = HashSet::new();
+        for i in 0..n {
+            if !st.contains(&vs[i]) {
+                println!("{}", i + 1);
+                st.insert(vs[i].clone());
+            }
         }
     }
 }
