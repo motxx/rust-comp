@@ -35,12 +35,33 @@ macro_rules! min {
 #[derive(Default)]
 struct Solver {}
 impl Solver {
+    fn closest_diff(a: &[u64], index: usize, seek: u64) -> u64 {
+        if index > 0 && index < a.len() {
+            min!(a[index] - seek, seek - a[index - 1])
+        } else if index > 0 {
+            seek - a[index - 1]
+        } else {
+            a[index] - seek
+        }
+    }
+
     #[fastout]
     fn solve(&mut self) {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            mut a: [u64; n],
+            q: usize,
+            b: [u64; q],
+        }
+        a.sort();
+        for seek in b {
+            let diff = match a.binary_search_by(|probe| probe.cmp(&seek)) {
+                Ok(_) => 0,
+                Err(i) => Self::closest_diff(&a, i, seek),
+            };
+            println!("{}", diff);
         }
     }
 }

@@ -35,12 +35,38 @@ macro_rules! min {
 #[derive(Default)]
 struct Solver {}
 impl Solver {
+    fn rec(n: usize, depth: usize, curr: &mut String, result: &mut Vec<String>) { 
+        if n < depth {
+            return;
+        }
+        if n == 0 {
+            if depth == 0 {
+                result.push(curr.clone());
+            }
+            return;
+        }
+        curr.push('(');
+        Self::rec(n - 1, depth + 1, curr, result);
+        curr.pop();
+        if depth > 0 {
+            curr.push(')');
+            Self::rec(n - 1, depth - 1, curr, result);
+            curr.pop();
+        }
+    }
+
     #[fastout]
     fn solve(&mut self) {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+        }
+        let mut result: Vec<String> = Vec::new();
+        let mut curr = String::new();
+        Self::rec(n, 0, &mut curr, &mut result);
+        if !result.is_empty() {
+            println!("{}", result.join("\n"));
         }
     }
 }

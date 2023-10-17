@@ -40,8 +40,27 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            p: u64,
+            q: u64,
+            a: [u64; n],
         }
+
+        let mut ans = 0;
+        for i in 0..n {
+            for j in i + 1..n {
+                for k in j + 1..n {
+                    for l in k + 1..n {
+                        for m in l + 1..n {
+                            if a[i] * a[j] % p * a[k] % p * a[l] % p * a[m] % p == q {
+                                ans += 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        println!("{}", ans);
     }
 }
 

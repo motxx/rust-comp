@@ -7,7 +7,9 @@
 #![allow(clippy::neg_multiply)]
 #![allow(dead_code)]
 use itertools::Itertools;
-use std::collections::{BTreeMap, BTreeSet, VecDeque};
+use num_traits::NumOps;
+use pathfinding::prelude::directions::N;
+use std::{collections::{BTreeMap, BTreeSet, VecDeque}, fmt::Display, str::FromStr};
 
 use proconio::{
     fastout, input,
@@ -40,8 +42,34 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: u128,
+            k: u64,
         }
+        let mut n = n;
+        for _ in 0..k {
+            let mut m = 0;
+            let mut i = 0;
+            // 8進数として読み取る
+            while n > 0 {
+                m += (n % 10) * 8u128.pow(i);
+                i += 1;
+                n /= 10;
+            }
+            n = 0;
+            i = 0;
+            // 9進数として書き出す
+            // ただし、8を5に置き換える
+            while m > 0 {
+                if m % 9 == 8 {
+                    n += 5 * 10u128.pow(i);
+                } else {
+                    n += (m % 9) * 10u128.pow(i);
+                }
+                i += 1;
+                m /= 9;
+            }
+        }
+        println!("{}", n);
     }
 }
 

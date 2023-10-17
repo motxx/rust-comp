@@ -6,6 +6,7 @@
 #![allow(clippy::nonminimal_bool)]
 #![allow(clippy::neg_multiply)]
 #![allow(dead_code)]
+use im_rc::HashMap;
 use itertools::Itertools;
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
@@ -40,8 +41,17 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            _: usize,
+            m: usize,
+            ab: [(usize, usize); m],
         }
+        let mut mp = HashMap::new();
+        for (a, b) in ab.iter() {
+            if a > b { *mp.entry(*a).or_insert(0) += 1 }
+            if a < b { *mp.entry(*b).or_insert(0) += 1 }
+        }
+        let ans = mp.values().filter(|&&x| x == 1).count();
+        println!("{}", ans);
     }
 }
 

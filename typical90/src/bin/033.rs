@@ -47,7 +47,7 @@ impl Solver {
             println!("{}", max!(h, w));
             return;
         }
-        println!("{}", (w / 2 + w % 2) * (h / 2 + h % 2));
+        println!("{}", ((h + 1) / 2) * ((w + 1) / 2));
     }
 }
 
