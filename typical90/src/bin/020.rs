@@ -40,8 +40,12 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            a: u64,
+            b: u32,
+            c: u64,
         }
+        // a < b ** c
+        println!("{}", if a < c.pow(b) { "Yes" } else { "No" })
     }
 }
 
