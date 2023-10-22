@@ -6,8 +6,10 @@
 #![allow(clippy::nonminimal_bool)]
 #![allow(clippy::neg_multiply)]
 #![allow(dead_code)]
+use alga::general::RealField;
 use itertools::Itertools;
-use std::collections::{BTreeMap, BTreeSet, VecDeque};
+use num_integer::Roots;
+use std::{collections::{BTreeMap, BTreeSet, VecDeque}, f64::consts::PI};
 
 use proconio::{
     fastout, input,
@@ -32,15 +34,37 @@ macro_rules! min {
         std::cmp::min($x, min!($( $y ),+))
     }
 }
+
 #[derive(Default)]
 struct Solver {}
 impl Solver {
+    fn get_yz(e: f64, t: f64, l: f64) -> (f64, f64) {
+        let rad = e / t * 2.0 * PI;
+        (rad.sin() * -l/2.0, -rad.cos() * l / 2.0 + l / 2.0)
+    }
+
     #[fastout]
     fn solve(&mut self) {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
+            t: f64,
+            l: f64,
+            x: f64,
+            y: f64,
+            q: usize,
+            e: [f64; q],
+        }
 
+        for i in 0..q {
+            let (ey, ez) = Self::get_yz(e[i], t, l);
+            let dy = (ey - y).abs();
+            let p2 = x * x + dy * dy;
+            let p = p2.sqrt();
+            let q = (p2 + ez * ez).sqrt();
+            let rad = (p / q).acos();
+            let deg = rad * 180.0 / PI;
+            println!("{}", deg);
         }
     }
 }
