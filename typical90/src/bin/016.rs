@@ -40,8 +40,29 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: u64,
+            a: u64,
+            b: u64,
+            c: u64,
         }
+
+        let mut ans = 10000;
+        for i in 0..10000 {
+            for j in 0..10000 {
+                let uc = a * i + b * j;
+                if uc > n {
+                    continue;
+                }
+                let ucc = n - uc;
+                if ucc % c > 0 {
+                    continue;
+                }
+                let k = ucc / c;
+                ans = min!(ans, i + j + k);
+            }
+        }
+
+        println!("{}", ans);
     }
 }
 
