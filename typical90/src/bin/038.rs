@@ -7,6 +7,7 @@
 #![allow(clippy::neg_multiply)]
 #![allow(dead_code)]
 use itertools::Itertools;
+use num_integer::lcm;
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
 use proconio::{
@@ -40,8 +41,12 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            a: u128,
+            b: u128,
         }
+
+        let ans = lcm(a, b);
+        println!("{}", if ans <= 1e18 as u128 { ans.to_string() } else { "Large".to_string() });
     }
 }
 
