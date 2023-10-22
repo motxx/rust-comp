@@ -40,8 +40,21 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            a: [i64; n],
+            b: [i64; n],
         }
+
+        let mut a = a;
+        a.sort();
+        let mut b = b;
+        b.sort();
+        let mut sum = 0i64;
+        for i in 0..n {
+            sum += (a[i] - b[i]).abs();
+        }
+
+        println!("{}", sum);
     }
 }
 
