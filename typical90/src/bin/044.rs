@@ -40,7 +40,21 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            q: usize,
+            a: [u64; n],
+            qs: [(usize, usize, usize); q],
+        }
+        let mut deq = VecDeque::from(a);
+        for (t, x, y) in qs {
+            match t {
+                1 =>  deq.swap(x - 1, y - 1),
+                2 => {
+                    let b = deq.pop_back().unwrap();
+                    deq.push_front(b);
+                },
+                _ => println!("{}", deq[x - 1]),
+            }
         }
     }
 }
