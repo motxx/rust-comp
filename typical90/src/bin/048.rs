@@ -7,7 +7,7 @@
 #![allow(clippy::neg_multiply)]
 #![allow(dead_code)]
 use itertools::Itertools;
-use std::collections::{BTreeMap, BTreeSet, VecDeque};
+use std::collections::{BTreeMap, BTreeSet, VecDeque, BinaryHeap};
 
 use proconio::{
     fastout, input,
@@ -40,8 +40,23 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            k: usize,
+            ab: [(i64, i64); n],
         }
+
+        let mut ans = ab.iter().map(|(a, _)| a).sum::<i64>();
+        let mut heap = ab.iter().map(|(a, b)| (b - a, -b, 2)).collect::<BinaryHeap<_>>();
+
+        for _ in 0..2 * n - k {
+            if let Some((md, mb, c)) = heap.pop() {
+                ans += md;
+                if c > 1 {
+                    heap.push((mb, 0, 1));
+                }
+            }
+        }
+        println!("{}", ans);
     }
 }
 
