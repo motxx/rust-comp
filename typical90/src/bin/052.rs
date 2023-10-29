@@ -40,8 +40,14 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            a: [[usize; 6]; n],
         }
+        let ans = a
+            .iter()
+            .map(|v| v.iter().sum::<usize>())
+            .fold(1, |acc, x| acc * x % MOD);
+        println!("{}", ans);
     }
 }
 
