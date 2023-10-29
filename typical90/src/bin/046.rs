@@ -14,7 +14,6 @@ use proconio::{
     marker::{Chars, Usize1},
 };
 
-const MOD: usize = 1e9 as usize + 7;
 // const MOD: usize = 998244353;
 // const MOD: usize = 2147483647;
 
@@ -40,8 +39,27 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
-
+            n: usize,
+            a: [u64; n],
+            b: [u64; n],
+            c: [u64; n],
         }
+        const MOD: usize = 46;
+        let mut a_count = [0u64; MOD];
+        let mut b_count = [0u64; MOD];
+        let mut c_count = [0u64; MOD];
+        for i in 0..n {
+            a_count[(a[i] % (MOD as u64)) as usize] += 1;
+            b_count[(b[i] % (MOD as u64)) as usize] += 1;
+            c_count[(c[i] % (MOD as u64)) as usize] += 1;
+        }
+        let ans: u64 = (0..MOD).flat_map(|i| {
+            (0..MOD).map(move |j| {
+                let k = (2 * MOD - i - j) % MOD;
+                a_count[i] * b_count[j] * c_count[k]
+            })
+        }).sum();
+        println!("{}", ans);
     }
 }
 
