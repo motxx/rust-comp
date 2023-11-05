@@ -40,7 +40,39 @@ impl Solver {
         // let mut stdin = LineSource::new(BufReader::new(io::stdin()));
         // macro_rules! input(($($tt:tt)*) => (proconio::input!(from &mut stdin, $($tt)*)));
         input! {
+            n: usize,
+            q: usize,
+            a: [i64; n],
+            lrv: [(usize, usize, i64); q],
+        }
 
+        let mut b = vec![0i64; n];
+        let mut ans = 0i64;
+        for i in 0..a.len() {
+            if i > 0 {
+                b[i] = a[i] - a[i - 1];
+                ans += b[i].abs();
+            }
+        }
+        //println!("a: {:?}", a);
+        //println!("b: {:?}", b);
+        for (l, r, v) in lrv {
+            if l > 1 {
+                let prev = b[l - 1];
+                b[l - 1] += v;
+                let curr = b[l - 1];
+                ans += curr.abs() - prev.abs();
+            }
+
+            if r < n {
+                let v = -v;
+                let prev = b[r];
+                b[r] += v;
+                let curr = b[r];
+                ans += curr.abs() - prev.abs();
+            }
+
+            println!("{}", ans);
         }
     }
 }
